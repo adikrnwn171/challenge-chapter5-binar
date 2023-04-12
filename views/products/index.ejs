@@ -2,6 +2,22 @@
 
     <body>
         <h1>Table Product Toko FSW 3</h1>
+        <a href="/admin/products">
+            <button>semua</button>
+        </a>
+        <a href="/admin/products?stock=10&filter=kurang">
+            <button>kurang dari 10</button>
+        </a>
+        <a href="/admin/products?stock=10&filter=lebih">
+            <button>lebih dari 10</button>
+        </a>
+        <a href="/admin/products?stock=100&filter=lebih">
+            <button>lebih dari 100</button>
+        </a>
+        <form>
+            <input type="text" name="search" placeholder="search product name">
+            <button type="submit">search</button>
+        </form>
         <table>
             <th>ID</th>
             <th>Name</th>
