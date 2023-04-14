@@ -7,6 +7,10 @@ const routes = require('./routes');
 const { default: axios } = require('axios');
 const { Op } = require('sequelize');
 
+// yang bantu upload file
+const imagekit = require('./lib/imagekit')
+const upload = require('./middleware/uploader')
+
 // framework utk http server
 const app = express();
 const PORT = 3000;
@@ -105,14 +109,33 @@ app.get('/admin/products/create', async (req, res) => {
     res.render("products/create")
 })
 
-app.post('/products/create', async (req, res) => {
+app.post('/products/create', upload.single('image'), async (req, res) => {
     const { name, price, stock } = req.body
-    await product.create({
+    const file = req.file
+
+    console.log(file)
+
+    // untuk dapat extension file
+    // ImageBitmap.jpg => jpg itu extension nya
+    const split = file.originalname.split('.');
+    const ext = split[split.length - 1];
+
+    // proses upload file ke imagekit
+    const img = await imagekit.upload({
+        file: file.buffer, // required
+        fileName: `IMG-${Date.now()}.${ext}`,
+    })
+
+    const data = await product.create({
         name,
         price,
-        stock
+        stock,
+        imageUrl: img.url
     })
     res.redirect(200, "/admin/products")
+    // res.status(201).json({
+    //     data 
+    // })
 })
 
 app.get('/admin/products/edit/:id', async (req, res) => {

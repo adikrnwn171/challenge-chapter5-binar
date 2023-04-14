@@ -23,6 +23,7 @@
             <th>Name</th>
             <th>Price</th>
             <th>Stock</th>
+            <th>image product</th>
             <th>Action</th>
             <% products.map((product)=> { %>
                 <tr>
@@ -37,6 +38,9 @@
                     </td>
                     <td>
                         <%= product.stock %>
+                    </td>
+                    <td>
+                        <img src="<%= product.imageUrl %>" alt="product image" style="width: 300px; height: 100px;">
                     </td>
                     <td>
                         <a href="/admin/products/edit/<%= product.id %>">
