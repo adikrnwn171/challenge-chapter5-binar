@@ -100,11 +100,14 @@ async function deleteShop(req, res) {
 
 async function createShop(req, res) {
     try {
-        const { name, city, userId } = req.body
+        console.log('ini user dari JWT')
+        console.log(req.user.id)
+        
+        const { name, city } = req.body
         const newShop = await shops.create({
             name,
             city,
-            userId,
+            userId : req.user.id,
         })
         res.status(201).json({
             status: 'success',
